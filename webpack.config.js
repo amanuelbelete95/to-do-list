@@ -18,11 +18,11 @@ module.exports = {
       },
     ],
   },
-    devtool: 'inline-source-map',
-    devServer: {
+  devtool: 'inline-source-map',
+  devServer: {
     static: './dist',
   },
-   plugins: [
+  plugins: [
     new HtmlWebpackPlugin({
       title: 'Development',
       template: './src/index.html',

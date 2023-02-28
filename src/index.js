@@ -1,9 +1,8 @@
 // import _ from 'lodash';
-// import './style.css';
+// eslint-disable-line
+import './style.css';
 
-const clear = document.querySelector('.clear');
 const list = document.getElementById('list');
-const input = document.getElementById('input');
 const position = 'beforeend';
 
 const toDoList = [
@@ -27,23 +26,22 @@ const toDoList = [
     description: 'play football',
     completed: true,
   },
-]
+];
 
 const todo = () => {
-for(let i = 0; i < toDoList.length; i++){
-const item = `<li class="item">
+  for (let i = 0; i < toDoList.length; i += 1) {
+    const item = `<li class="item">
               <div class="left">
               <i class="fa-regular fa-square"></i>
               <p class="text">${toDoList[i].description}</p>
               </div>
               <i class="fa-solid fa-trash" class="complete"></i>
-            </li>`
-            list.insertAdjacentHTML(position, item)
-}
-}
+            </li>`;
+    list.insertAdjacentHTML(position, item);
+  }
+};
 
 window.document.addEventListener('DOMContentLoaded', todo);
-
 
 // function component() {
 //   const element = document.createElement('div');
