@@ -18,15 +18,16 @@ input {
   font-style: italic;
   height: 60px;
   border: 1px solid grey;
-  width: 80%;
+  width: 70%;
   font-size: 25px;
   margin: 10px;
 }
 
 .add {
   height: 60px;
-  width: 10%;
+  /* width: 10%; */
   font-size: 25px;
+  margin: 20px;
 }
 
 .erase-section {
@@ -46,7 +47,7 @@ input {
   gap: 10px;
   padding-right: 50px;
   align-items: center;
-  padding-right: 100px;
+  padding-right: 280px;
 }
 
 .left {

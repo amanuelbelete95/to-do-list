@@ -36,7 +36,7 @@ const item = `<li class="item">
               <i class="fa-regular fa-square"></i>
               <p class="text">${toDoList[i].description}</p>
               </div>
-              <i class="fa-solid fa-trash"></i>
+              <i class="fa-solid fa-trash" class="complete"></i>
             </li>`
             list.insertAdjacentHTML(position, item)
 }
