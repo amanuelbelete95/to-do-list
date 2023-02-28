@@ -1,6 +1,6 @@
 // import _ from 'lodash';
 // eslint-disable-line
-import './style.css';
+// import './style.css';
 
 const list = document.getElementById('list');
 const position = 'beforeend';
