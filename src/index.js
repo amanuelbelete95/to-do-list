@@ -29,7 +29,7 @@ const toDoList = [
   },
 ]
 
-function todo() {
+const todo = () => {
 for(let i = 0; i < toDoList.length; i++){
 const item = `<li class="item">
               <div class="left">

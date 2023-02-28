@@ -1,11 +1,17 @@
 body {
   font-size: 25px;
 }
+
+ul {
+  list-style-type: none;
+}
+
 header {
   display: flex;
   justify-content: flex-end;
   margin: 50px;
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -25,7 +31,6 @@ input {
 
 .add {
   height: 60px;
-  /* width: 10%; */
   font-size: 25px;
   margin: 20px;
 }
@@ -35,6 +40,7 @@ input {
   justify-content: center;
   background-color: antiquewhite;
 }
+
 .erase {
   font-size: 25px;
   margin: 25px;
@@ -45,7 +51,6 @@ input {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  padding-right: 50px;
   align-items: center;
   padding-right: 280px;
 }
