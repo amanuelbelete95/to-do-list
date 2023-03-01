@@ -8,16 +8,15 @@ let id ;
 const check = "fa-square-check";
 const uncheck = "fa-square";
 const line = "line-through";
-
-let data = localStorage.getItem('TODO');
+// local storage
 const loadList = array => {
   array.forEach(item => {
     addToDo(item.todo, item.id, item.done, item.trash)
   });
 }
-
-if(data){
-  LIST = JSON.parse(data);
+let myData = localStorage.getItem("TODO");
+if(myData){
+  LIST = JSON.parse(myData);
   id = LIST.length;
   loadList(LIST);
 }
@@ -56,9 +55,11 @@ addBtn.addEventListener('click', () => {
      done: false,
      trash: false
     });
+
+    id += 1;
+    localStorage.setItem("TODO", JSON.stringify(LIST));
   }
-  id += 1;
-  localStorage.setItem('TODO', JSON.stringify(LIST));
+
   input.value = "";
 })
 
@@ -72,8 +73,6 @@ function completeToDo(element){
 function removeToDo(element){
 element.parentNode.parentNode.removeChild(element.parentNode);
 LIST[element.id].trash = true;
-LIST.splice(id, 1);
-localStorage.setItem('TODO', JSON.stringify(LIST));
 
 }
 
@@ -89,3 +88,4 @@ list.addEventListener('click', event => {
   localStorage.setItem('TODO', JSON.stringify(LIST));
 });
 
+document.addEventListener('DOMContentLoaded',loadList)
