@@ -1,7 +1,3 @@
-// import _ from 'lodash';
-// eslint-disable-line
-// import './style.css';
-
 const list = document.getElementById('list');
 const position = 'beforeend';
 
@@ -42,15 +38,3 @@ const todo = () => {
 };
 
 window.document.addEventListener('DOMContentLoaded', todo);
-
-// function component() {
-//   const element = document.createElement('div');
-
-//   // Lodash, currently included via a script, is required for this line to work
-
-//   element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-
-//   return element;
-// }
-
-// document.body.appendChild(component());
