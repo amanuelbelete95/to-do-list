@@ -55,10 +55,6 @@ input {
   padding-right: 280px;
 }
 
-.left i {
-  cursor: pointer;
-}
-
 .left {
   display: flex;
   gap: 30px;
