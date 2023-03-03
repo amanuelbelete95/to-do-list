@@ -37,6 +37,9 @@ const rerender = (myList) => {
 
 rerender(myData);
 
+
+
+
 addBtn.addEventListener('click', () => {
   const todo = input.value;
 
