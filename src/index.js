@@ -1,40 +1,88 @@
-const list = document.getElementById('list');
-const position = 'beforeend';
+import { list, input, addBtn } from './modules/selectors.js';
+import completeToDo from './modules/completetodo.js';
+import addToDo from './modules/addtodo.js';
 
-const toDoList = [
-  {
-    index: 0,
-    description: 'Reading books',
-    completed: true,
-  },
-  {
-    index: 1,
-    description: 'Going for a walk',
-    completed: true,
-  },
-  {
-    index: 2,
-    description: 'Meet families',
-    completed: true,
-  },
-  {
-    index: 3,
-    description: 'play football',
-    completed: true,
-  },
-];
+let LIST = JSON.parse(localStorage.getItem('TODO')) || [];
+let id = 0;
 
-const todo = () => {
-  for (let i = 0; i < toDoList.length; i += 1) {
-    const item = `<li class="item">
+const clear = document.querySelector('.clear');
+clear.addEventListener('click', () => {
+  localStorage.clear();
+  window.location.reload();
+});
+
+const erase = document.querySelector('.erase');
+erase.addEventListener('click', () => {
+  localStorage.clear();
+  window.location.reload();
+});
+
+const myData = JSON.parse(localStorage.getItem('TODO'));
+
+const rerender = (myList) => {
+  if (myList) {
+    const container = document.createElement('div');
+    myList.forEach((item) => {
+      container.innerHTML += `<li class="item">
               <div class="left">
-              <i class="fa-regular fa-square"></i>
-              <p class="text">${toDoList[i].description}</p>
+              <i class="fa-regular fa-square" job="complete" id=${item.id}></i>
+              <p class="text">${item.todo}</p>
               </div>
-              <i class="fa-solid fa-trash" class="complete"></i>
+              <i class="fa-solid fa-trash" job="delete" id=${id}></i>
             </li>`;
-    list.insertAdjacentHTML(position, item);
+      list.append(container);
+    });
   }
 };
 
-window.document.addEventListener('DOMContentLoaded', todo);
+rerender(myData);
+
+addBtn.addEventListener('click', () => {
+  const todo = input.value;
+
+  if (todo) {
+    addToDo(todo, id, false, false);
+    if (myData) {
+      LIST = myData;
+    }
+    LIST.push({
+      todo,
+      id: LIST.length,
+      done: false,
+      trash: false,
+    });
+
+    id += 1;
+    localStorage.setItem('TODO', JSON.stringify(LIST));
+  }
+
+  input.value = '';
+});
+
+const removeToDo = (element, elemenId) => {
+  element.parentNode.parentNode.removeChild(element.parentNode);
+  LIST[elemenId].trash = true;
+  const t = localStorage.getItem('TODO');
+  const parsedData = JSON.parse(t);
+  const data = parsedData[elemenId].id;
+
+  const currentList = parsedData.filter((item) => item.id !== data);
+  currentList.forEach((element, index) => {
+    element.id = index;
+  });
+
+  LIST = currentList;
+  window.location.reload();
+  localStorage.setItem('TODO', JSON.stringify(currentList));
+};
+
+list.addEventListener('click', (event) => {
+  const element = event.target;
+  const elemenId = event.target.id;
+  const elementJob = element.attributes.job.value;
+  if (elementJob === 'complete') {
+    completeToDo(element, elemenId);
+  } else if (elementJob === 'delete') {
+    removeToDo(element, elemenId);
+  }
+});

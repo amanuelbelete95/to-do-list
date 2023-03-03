@@ -60,3 +60,11 @@ input {
   gap: 30px;
   align-items: center;
 }
+
+.left i {
+  cursor: pointer;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
