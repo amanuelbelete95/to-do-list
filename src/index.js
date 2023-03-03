@@ -1,55 +1,53 @@
-const list = document.getElementById('list');
-const input = document.getElementById('input');
-const addBtn = document.querySelector('.add');
+import { list, input, addBtn } from './modules/selectors.js';
+import completeToDo from './modules/completetodo.js';
+import addToDo from './modules/addtodo.js';
 
-let LIST;
-let id;
+let LIST = JSON.parse(localStorage.getItem('TODO')) || [];
+let id = 0;
 
-const check = 'fa-square-check';
-const uncheck = 'fa-square';
-const line = 'line-through';
-// local storage
+const clear = document.querySelector('.clear');
+clear.addEventListener('click', () => {
+  localStorage.clear();
+  window.location.reload();
+});
 
-function addToDo(todo, id, done, trash) {
-  if (trash) { return; }
-  const Done = done ? check : uncheck;
-  const Line = done ? line : '';
-  const position = 'beforeend';
+const erase = document.querySelector('.erase');
+erase.addEventListener('click', () => {
+  localStorage.clear();
+  window.location.reload();
+});
 
-  const item = `<li class="item">
+const myData = JSON.parse(localStorage.getItem('TODO'));
+
+const rerender = (myList) => {
+  if (myList) {
+    const container = document.createElement('div');
+    myList.forEach((item) => {
+      container.innerHTML += `<li class="item">
               <div class="left">
-              <i class="fa-regular ${Done}" job="complete" id=${id}></i>
-              <p class="text ${Line}">${todo}</p>
+              <i class="fa-regular fa-square" job="complete" id=${item.id}></i>
+              <p class="text">${item.todo}</p>
               </div>
               <i class="fa-solid fa-trash" job="delete" id=${id}></i>
             </li>`;
-
-  list.insertAdjacentHTML(position, item);
-}
-
-const loadList = (array) => {
-  array.forEach((item) => {
-    addToDo(item.todo, item.id, item.done, item.trash);
-  });
+      list.append(container);
+    });
+  }
 };
-const myData = localStorage.getItem('TODO');
-if (myData) {
-  LIST = JSON.parse(myData);
-  id = LIST.length;
-  loadList(LIST);
-} else {
-  LIST = [];
-  id = 0;
-}
+
+rerender(myData);
 
 addBtn.addEventListener('click', () => {
   const todo = input.value;
 
   if (todo) {
     addToDo(todo, id, false, false);
+    if (myData) {
+      LIST = myData;
+    }
     LIST.push({
       todo,
-      id,
+      id: LIST.length,
       done: false,
       trash: false,
     });
@@ -61,27 +59,30 @@ addBtn.addEventListener('click', () => {
   input.value = '';
 });
 
-function completeToDo(element) {
-  element.classList.toggle(check);
-  element.classList.toggle(uncheck);
-  element.parentNode.querySelector('.text').classList.toggle(line);
-  LIST[element.id].done = !LIST[element.id].done;
-}
-
-function removeToDo(element) {
+const removeToDo = (element, elemenId) => {
   element.parentNode.parentNode.removeChild(element.parentNode);
-  LIST[element.id].trash = true;
-}
+  LIST[elemenId].trash = true;
+  const t = localStorage.getItem('TODO');
+  const parsedData = JSON.parse(t);
+  const data = parsedData[elemenId].id;
+
+  const currentList = parsedData.filter((item) => item.id !== data);
+  currentList.forEach((element, index) => {
+    element.id = index;
+  });
+
+  LIST = currentList;
+  window.location.reload();
+  localStorage.setItem('TODO', JSON.stringify(currentList));
+};
 
 list.addEventListener('click', (event) => {
   const element = event.target;
+  const elemenId = event.target.id;
   const elementJob = element.attributes.job.value;
   if (elementJob === 'complete') {
-    completeToDo(element);
+    completeToDo(element, elemenId);
   } else if (elementJob === 'delete') {
-    removeToDo(element);
+    removeToDo(element, elemenId);
   }
-  localStorage.setItem('TODO', JSON.stringify(LIST));
 });
-
-document.addEventListener('DOMContentLoaded', loadList);
