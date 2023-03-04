@@ -13,7 +13,10 @@ clear.addEventListener('click', () => {
 
 const erase = document.querySelector('.erase');
 erase.addEventListener('click', () => {
-  localStorage.clear();
+  const updateLocal = JSON.parse(localStorage.getItem('TODO'));
+
+  const currentList = updateLocal.filter((item) => item.done === false);
+  localStorage.setItem('TODO', JSON.stringify(currentList));
   window.location.reload();
 });
 
